@@ -1,0 +1,31 @@
+{% load static %}
+{% static "img" as logo %}
+<html lang="en">
+<head>
+    <style>
+        header {
+    padding: 1em;
+    color: black;
+    background-color:black;
+    clear: left;
+    <!--text-align: center;-->
+
+}
+    </style>
+    <script>
+        function redirect()
+        {
+            window.location.href = ""
+        }
+        setTimeout(redirect,3000)
+    </script>
+    <meta charset="UTF-8">
+    <title>Success</title>
+</head>
+<body>
+<header>
+  <img src="{{logo}}/logo.png" style="height:60px;">
+</header>
+    <h1> Your Booking is Successfull</h1>
+</body>
+</html>

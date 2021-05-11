@@ -1,0 +1,173 @@
+{% load static %}
+{% static "img" as logo %}
+<html lang="en">
+<head>
+    <style>
+        header {
+    padding: 1em;
+    color: black;
+    background-color:black;
+    clear: left;
+    <!--text-align: center;-->
+
+}
+    </style>
+    <script>
+        function Total()
+        {
+            {% for i in ook %}
+           var cost = {{i.Cost_per_day}} ;
+            var date1 = document.getElementById("pdate").value;
+            var edate1 = new Date(date1);
+            var fdate1 = edate1.getDate();
+             var date2 = document.getElementById("ddate").value;
+            var edate2 = new Date(date2);
+            var fdate2 = edate2.getDate();
+            var diff_date = Math.abs(fdate2-fdate1);
+            var passa = document.getElementById("passa").value;
+            var Totalcost = cost*diff_date*passa;
+             document.getElementById("result").value = Totalcost;
+           {% endfor %}
+        }
+    </script>
+        <meta charset="utf-8"/>
+        <title>FlameOnePage Free Template by FairTech</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <meta content="FlameOnePage freebie theme for web startups by FairTech SEO." name="description"/>
+        <meta content="FairTech" name="author"/>
+		<link href="{% static '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/simple-line-icons/simple-line-icons.min.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+        <link href="{% static 'vendor/swiper/css/swiper.min.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'css/layout.min.css' %}" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+    </head>
+<body>
+ <header>
+  <img src="{{logo}}/logo.png" style="height:60px;">
+</header>
+<br>
+<div class="container">
+    <div class="column1">
+ {% for i in ook%}
+ <div style="background-color:black;padding-left:10px;padding-right:300px;">
+	 <h1 style="color:white;">{{i.Title}}</h1>
+ </div>
+	<div id="row1">
+        <img src="{{i.img.url}}" align="left">
+    </div>
+    <div id="row2" align="right">
+     <form action="camp" method="post">
+    {% csrf_token %}
+         <h2 style="color:black;" align="center">Booking Details</h2>
+         <div style="padding-bottom:6px;" align="center">Name: <input type="text" id="uname" name="uname" style="width:220px;height:30px;"><br></div>
+         <div style="padding-bottom:6px;" align="center">Email: <input type="email" id="email" name="email" style="width:220px;height:30px;"><br></div>
+         <div style="padding-bottom:6px;" align="center">Phone No: <input type="number" id="phone" name="phone" style="width:220px;height:30px;"><br></div>
+         <div style="padding-bottom:6px;" align="center">Pickup Date: <input type="date" id="pdate" name="pdate" style="width:220px;height:30px;"><br></div>
+         <div style="padding-bottom:6px;" align="center">Drop Date: <input type="date" id="ddate" name="ddate" style="width:220px;height:30px;"><br></div>
+         <div style="padding-bottom:6px" align="center">No. Passengers: <input type="number" id="passa" name="passa" style="width:220px;height:30px;"><br></div>
+         <div align="center">Total Cost: <input type="text" id="result" name="result" style="font-size:15px;color:black;width:220px;height:30px;"><br></div>
+         <div align="center" style="padding-top:10px;"><input type="button" onclick="Total()" value="Estimate" style="background-color:Black;color: white;padding: 8px 20px;margin: 8px 0;border: none;cursor: pointer;width: 100px;">
+    <input type="submit"  value="Book" style="background-color:Green;color: white;padding: 8px 20px;margin: 8px 0;border: none;cursor: pointer;width: 100px;"><br></div>
+         <div align="center"><input type="reset" value="Reset" style="background-color:Red;color: white;padding: 8px 20px;margin: 8px 0;border: none;cursor: pointer;width: 100px;"></div>
+     </form>
+    </div>
+    </div>
+    <div name="column2">
+        {% for i in ook %}
+        <h4 style="color:black;">{{i.desc}}</h4>
+        <h4 style="color:black;"><u>Specifications:</u></h4>
+        <h4 style="color:black;"><b>Brand: {{i.Brand}}</b></h4>
+            <h4 style="color:black;">Fuel Type: {{i.FuelType}}</h4>
+            <h4 style="color:black;">No. of Seats: {{i.NoSeats}}</h4>
+            <h4 style="color:black;">Power Steering: {% if i.Powersteering %}Yes{% else %}No{% endif %}</h4>
+            <h4 style="color:black;">Air Conditioner: {% if i.AC %}Yes{% else %}No{% endif %}</h4>
+            <h4 style="color:black;">Brake Assist: {% if i.BrakeAssist %}Yes{% else %}No{% endif %}</h4>
+            <h4 style="color:black;">Airbags: {% if i.Airbags %}Yes{% else %}No{% endif %}</h4>
+            <h4 style="color:black;">CD Player: {% if i.CDPlayer %}Yes{% else %}No{% endif %}</h4>
+            <h4 style="color:black;">Leather Seats: {% if i.LeatherSeats %}Yes{% else %}No{% endif %}</h4>
+            <h4 style="color:black;">Crash Sensor: {% if i.CrashSensor %}Yes{% else %}No{% endif %}</h4>
+            <h4 style="color:black;">Cost Per day(including No. Passengers): {{i.Cost_per_day}}</h4>
+        {% endfor %}
+    </div>
+</div>
+</div>
+ {% endfor %}
+
+ <footer class="footer">
+            <!-- Links -->
+     <div class="section-seperator">
+         <div class="content-md container">
+             <div class="row">
+                 <div class="col-sm-2 sm-margin-b-30">
+                            <!-- List -->
+                     <ul class="list-unstyled footer-list">
+                         <li class="footer-list-item"><a href="{% static 'body' %}">Home</a></li>
+                         <li class="footer-list-item"><a href="{% static 'about' %}">Team</a></li>
+                         <li class="footer-list-item"><a href="{% static 'work' %}">Credentials</a></li>
+                         <li class="footer-list-item"><a href="{% static 'contact' %}">Contact</a></li>
+                     </ul>
+                            <!-- End List -->
+                 </div>
+                 <div class="col-sm-2 sm-margin-b-30">
+                            <!-- List -->
+                     <ul class="list-unstyled footer-list">
+                         <li class="footer-list-item"><a href="{% static '#' %}">Twitter</a></li>
+                         <li class="footer-list-item"><a href="{% static '#' %}">Facebook</a></li>
+                         <li class="footer-list-item"><a href="{% static '#' %}">Instagram</a></li>
+                         <li class="footer-list-item"><a href="{% static '#' %}">YouTube</a></li>
+                     </ul>
+                            <!-- End List -->
+                 </div>
+                 <div class="col-sm-3">
+                            <!-- List -->
+                     <ul class="list-unstyled footer-list">
+                         <li class="footer-list-item"><a href="{% static '#' %}">Subscribe to Our Newsletter</a></li>
+                         <li class="footer-list-item"><a href="{% static '#' %}">Privacy Policy</a></li>
+                         <li class="footer-list-item"><a href="{% static '#' %}">Terms &amp; Conditions</a></li>
+                     </ul>
+                            <!-- End List -->
+                 </div>
+             </div>
+                    <!--// end row -->
+         </div>
+     </div>
+            <!-- End Links -->
+
+            <!-- Copyright -->
+     <div class="content container">
+         <div class="row">
+             <div class="col-xs-6">
+                 <img class="footer-logo" src="{% static 'img/logo-dark.png' %}" alt="flameonepage Logo">
+             </div>
+             <div class="col-xs-6 text-right">
+                        <p class="margin-b-0"><a class="fweight-700" href="{% static '#' %}">FlameOnePage</a> Theme Powered by: <a class="fweight-700" href="{% static 'http://ft-seo.ch/' %}">FairTech Studio</a></p>
+             </div>
+         </div>
+                <!--// end row -->
+     </div>
+            <!-- End Copyright -->
+ </footer>
+
+        <script src="{% static 'vendor/jquery.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'vendor/jquery-migrate.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+
+        <!-- PAGE LEVEL PLUGINS -->
+        <script src="{% static 'vendor/jquery.easing.js' %}" type="text/javascript"></script>
+        <script src="{% static 'vendor/jquery.back-to-top.js' %}" type="text/javascript"></script>
+        <script src="{% static 'vendor/jquery.smooth-scroll.js' %}" type="text/javascript"></script>
+        <script src="{% static 'vendor/jquery.wow.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'vendor/swiper/js/swiper.jquery.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'vendor/masonry/jquery.masonry.pkgd.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'vendor/masonry/imagesloaded.pkgd.min.js' %}" type="text/javascript"></script>
+
+        <!-- PAGE LEVEL SCRIPTS -->
+        <script src="{% static 'js/layout.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/components/wow.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/components/swiper.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/components/masonry.min.js' %}" type="text/javascript"></script>
+</body>
+</html>
